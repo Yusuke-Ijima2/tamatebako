@@ -14,14 +14,12 @@ const Home: FC<Props> = (props) => {
   return (
     <div>
       <h2>POSTの一覧</h2>
-      <table>
 	{props.posts.map((post) =>
-	  <tr>
-	    <td>{post.id}.</td>
-	    <td>{post.title}</td>
-	  </tr>
+	  <div>
+	    <p>{post.id}.</p>
+	    <p>{post.title}</p>
+	  </div>
         )}
-      </table>
     </div>
   )
 }
