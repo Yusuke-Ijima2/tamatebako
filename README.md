@@ -11,3 +11,5 @@
 ### infrastructure
 - [x] docker
 - [ ] CircleCI
+- [ ] Vercel
+- [ ] AWS
