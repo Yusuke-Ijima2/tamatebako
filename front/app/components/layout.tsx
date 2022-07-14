@@ -7,7 +7,8 @@ import Link from "next/link";
 const name = "Yusuke Ijima";
 export const siteTitle = "Next.js Sample Website";
 
-export default function Layout({ children, home }) {
+export default function Layout(props) {
+  const { children, home } = props;
   console.log(home);
 
   return (
