@@ -1,38 +1,14 @@
-import React, { FC } from "react";
-import { GetStaticProps } from "next";
+import Link from "next/link";
 
-type Post = {
-  id: number;
-  title: string;
-}
-
-type Props = {
-  posts: Post[];
-}
-
-const Home: FC<Props> = (props) => {
+export default function index() {
   return (
-    <div>
-      <h2>POSTの一覧</h2>
-	{props.posts.map((post) =>
-	  <div>
-	    <p>{post.id}.</p>
-	    <p>{post.title}</p>
-	  </div>
-        )}
-    </div>
-  )
+    <>
+      <h1 className="title">
+        Read{" "}
+        <Link href="/posts/firstPost">
+          <a>this page!</a>
+        </Link>
+      </h1>
+    </>
+  );
 }
-
-export const getStaticProps: GetStaticProps = async context => {
-  const response = await fetch("http://api:3000/posts", {method: "GET"});
-  const json = await response.json();
-
-  return {
-    props: {
-      posts: json
-    },
-  };
-}
-
-export default Home;
