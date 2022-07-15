@@ -22,7 +22,7 @@ services:
       context: ./api/
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - 8000:3000
     volumes:
       - ./api:/app
     command: sh -c  "rm -f tmp/pids/server.pid && rails server -b 0.0.0.0"
@@ -35,7 +35,7 @@ services:
       - ./front/app:/usr/src/app
     command: sh -c "yarn install && yarn dev"
     ports:
-      - "8000:3000"
+      - "3000:3000"
 volumes:
   mysql-db:
     driver: local

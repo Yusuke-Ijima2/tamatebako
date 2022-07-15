@@ -1,38 +1,45 @@
-import React, { FC } from "react";
-import { GetStaticProps } from "next";
+import Layout from "../components/layout";
+import utilStyles from "../styles/utils.module.css";
+import { getSortedPostsData } from "../lib/posts";
+import Link from "next/link";
+import Date from "../components/date";
 
-type Post = {
-  id: number;
-  title: string;
-}
-
-type Props = {
-  posts: Post[];
-}
-
-const Home: FC<Props> = (props) => {
-  return (
-    <div>
-      <h2>POSTの一覧</h2>
-	{props.posts.map((post) =>
-	  <div>
-	    <p>{post.id}.</p>
-	    <p>{post.title}</p>
-	  </div>
-        )}
-    </div>
-  )
-}
-
-export const getStaticProps: GetStaticProps = async context => {
-  const response = await fetch("http://api:3000/posts", {method: "GET"});
-  const json = await response.json();
-
+// export async function getStaticProps() {
+//   const allPostsData = getSortedPostsData();
+//   return {
+//     props: {
+//       allPostsData,
+//     },
+//   };
+// }
+export async function getServerSideProps() {
+  const allPostsData = getSortedPostsData();
   return {
     props: {
-      posts: json
+      allPostsData,
     },
   };
 }
 
-export default Home;
+export default function Home({ allPostsData }) {
+  return (
+    <Layout home>
+      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <ul className={utilStyles.list}>
+          {allPostsData.map(({ id, date, title }) => (
+            <li className={utilStyles.listItem} key={id}>
+              <Link href={`/posts/${id}`}>
+                <a>{title}</a>
+              </Link>
+              <br />
+              <small className={utilStyles.lightText}>
+                <Date dateString={date} />
+              </small>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </Layout>
+  );
+}
